@@ -17,12 +17,12 @@ export const siteConfig = {
 
   nav: {
     cta: {
-      text: "Integrate Agent",
-      href: "#",
+      text: "GitHub",
+      href: "https://github.com/subheeksh5599/FlawSeeking",
     },
     signIn: {
-      text: "Dashboard",
-      href: "#",
+      text: "Docs",
+      href: "https://github.com/subheeksh5599/FlawSeeking#readme",
     },
   },
 } as const;

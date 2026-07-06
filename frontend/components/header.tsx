@@ -11,14 +11,13 @@ import Link from "next/link";
 import { useState, type ReactNode } from "react";
 
 const navLinks = [
-  { href: "#how", label: "How it Works" },
-  { href: "#features", label: "Features" },
-  { href: "#resources", label: "Docs" },
+  { href: "#", label: "Security" },
+  { href: "#", label: "Policies" },
+  { href: "#", label: "Docs" },
 ];
 
 const authLinks = [
   { href: "https://github.com/subheeksh5599/FlawSeeking", label: "GitHub" },
-  { href: "#", label: "Launch App" },
 ];
 
 export function Header(): ReactNode {

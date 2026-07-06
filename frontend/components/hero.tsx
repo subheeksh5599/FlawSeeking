@@ -1,7 +1,7 @@
 "use client";
 
 import { useScroll, useTransform, useSpring, motion } from "motion/react";
-import { ArrowDown, Shield, Activity, Lock } from "lucide-react";
+import { Shield, Activity, Lock } from "lucide-react";
 import Image from "next/image";
 import { useRef, type ReactNode } from "react";
 import { FluidCursor } from "./fluid-cursor";
@@ -98,7 +98,7 @@ export function Hero(): ReactNode {
       </div>
 
       <motion.div
-        className="absolute inset-x-0 bottom-24 mx-auto flex max-w-4xl items-center justify-between px-4 sm:px-6 lg:px-8"
+        className="absolute inset-x-0 bottom-24 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{
@@ -107,14 +107,9 @@ export function Hero(): ReactNode {
           ease: [0.25, 0.46, 0.45, 0.94],
         }}
       >
-        <p className="text-foreground/60 dark:text-foreground/50 max-w-sm text-sm">
-          Drop FlawSeeking in front of your agent. 5 lines of SDK code. Your agent stays non-custodial. FlawSeeking stays the gatekeeper.
+        <p className="text-foreground/60 text-sm text-center">
+          5 lines to integrate. Non‑custodial. Programmable policies. On‑chain audit trail.
         </p>
-
-        <ArrowDown
-          className="text-foreground/60 dark:text-foreground/50 h-12 w-12"
-          strokeWidth={1}
-        />
       </motion.div>
     </section>
   );
