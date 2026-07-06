@@ -18,7 +18,7 @@ interface Agent {
   address: string;
   agent: string;
   registered: boolean;
-  policyHash: string;
+  activePolicyHash: string;
   totalTransactions: number;
   violations: number;
   totalVolumeCspr: string;
