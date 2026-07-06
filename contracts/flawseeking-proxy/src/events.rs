@@ -1,14 +1,13 @@
 use odra::prelude::*;
-use odra::Event;
 
-#[derive(Event)]
+#[odra::event]
 pub struct AgentRegistered {
     pub agent: Address,
     pub policy_hash: String,
     pub timestamp: u64,
 }
 
-#[derive(Event)]
+#[odra::event]
 pub struct TransactionGuarded {
     pub agent: Address,
     pub recipient: Address,
@@ -20,7 +19,7 @@ pub struct TransactionGuarded {
     pub timestamp: u64,
 }
 
-#[derive(Event)]
+#[odra::event]
 pub struct PolicyUpdated {
     pub agent: Address,
     pub old_policy_hash: String,
@@ -28,13 +27,13 @@ pub struct PolicyUpdated {
     pub timestamp: u64,
 }
 
-#[derive(Event)]
+#[odra::event]
 pub struct AgentPaused {
     pub agent: Address,
     pub timestamp: u64,
 }
 
-#[derive(Event)]
+#[odra::event]
 pub struct AgentUnpaused {
     pub agent: Address,
     pub timestamp: u64,

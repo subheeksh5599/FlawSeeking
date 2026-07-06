@@ -1,4 +1,5 @@
 #![no_std]
+extern crate alloc;
 
 use odra::prelude::*;
 
@@ -199,7 +200,7 @@ mod tests {
     use super::*;
     use odra::test_env;
 
-    fn default_config(agent: Address) -> PolicyConfig {
+    fn default_config(_agent: Address) -> PolicyConfig {
         PolicyConfig {
             max_cspr_per_tx: U256::from(50),
             max_cspr_per_hour: U256::from(200),
@@ -212,38 +213,41 @@ mod tests {
 
     #[test]
     fn test_allows_valid_tx() {
+        let env = test_env();
         let mut policy = FlawSeekingPolicy::deploy(
-            &test_env(),
-            test_env::get_account(0),
-            default_config(test_env::get_account(0)),
+            &env,
+            env.get_account(0),
+            default_config(env.get_account(0)),
         );
 
-        let result = policy.evaluate_tx(&test_env::get_account(1), U256::from(30));
+        let result = policy.evaluate_tx(&env.get_account(1), U256::from(30));
         assert!(result.passed);
         assert_eq!(result.reason, "PASSED");
     }
 
     #[test]
     fn test_blocks_size_exceeded() {
+        let env = test_env();
         let mut policy = FlawSeekingPolicy::deploy(
-            &test_env(),
-            test_env::get_account(0),
-            default_config(test_env::get_account(0)),
+            &env,
+            env.get_account(0),
+            default_config(env.get_account(0)),
         );
 
-        let result = policy.evaluate_tx(&test_env::get_account(1), U256::from(500));
+        let result = policy.evaluate_tx(&env.get_account(1), U256::from(500));
         assert!(!result.passed);
         assert!(result.reason.contains("TX_SIZE_EXCEEDED"));
     }
 
     #[test]
     fn test_blocks_blocklisted_recipient() {
-        let mut config = default_config(test_env::get_account(0));
-        let bad_addr = test_env::get_account(2);
+        let env = test_env();
+        let mut config = default_config(env.get_account(0));
+        let bad_addr = env.get_account(2);
         config.blocklist.push(bad_addr);
 
         let mut policy =
-            FlawSeekingPolicy::deploy(&test_env(), test_env::get_account(0), config);
+            FlawSeekingPolicy::deploy(&env, env.get_account(0), config);
 
         let result = policy.evaluate_tx(&bad_addr, U256::from(5));
         assert!(!result.passed);
@@ -252,16 +256,17 @@ mod tests {
 
     #[test]
     fn test_hourly_limit_enforced() {
-        let mut config = default_config(test_env::get_account(0));
+        let env = test_env();
+        let mut config = default_config(env.get_account(0));
         config.max_cspr_per_hour = U256::from(100);
 
         let mut policy =
-            FlawSeekingPolicy::deploy(&test_env(), test_env::get_account(0), config);
+            FlawSeekingPolicy::deploy(&env, env.get_account(0), config);
 
-        let result1 = policy.evaluate_tx(&test_env::get_account(1), U256::from(80));
+        let result1 = policy.evaluate_tx(&env.get_account(1), U256::from(80));
         assert!(result1.passed);
 
-        let result2 = policy.evaluate_tx(&test_env::get_account(1), U256::from(80));
+        let result2 = policy.evaluate_tx(&env.get_account(1), U256::from(80));
         assert!(!result2.passed);
         assert!(result2.reason.contains("HOURLY_LIMIT"));
     }

@@ -67,12 +67,11 @@ impl FlawSeekingProxy {
             },
         );
 
-        AgentRegistered {
+        odra::emit_event(AgentRegistered {
             agent,
             policy_hash: self.agents.get(&agent).unwrap_or_default().policy_hash,
             timestamp: odra::contract_api::get_block_time(),
-        }
-        .emit();
+        });
     }
 
     pub fn execute_guarded_tx(
@@ -104,7 +103,7 @@ impl FlawSeekingProxy {
             PolicyResult::Allow => {
                 self.agents.set(&agent, state);
 
-                TransactionGuarded {
+                odra::emit_event(TransactionGuarded {
                     agent,
                     recipient,
                     amount,
@@ -113,8 +112,7 @@ impl FlawSeekingProxy {
                     violation_id: None,
                     deploy_hash: Some(String::new()),
                     timestamp: odra::contract_api::get_block_time(),
-                }
-                .emit();
+                });
 
                 GuardResult {
                     status: String::from("ALLOWED"),
@@ -145,7 +143,7 @@ impl FlawSeekingProxy {
 
                 self.agents.set(&agent, state);
 
-                TransactionGuarded {
+                odra::emit_event(TransactionGuarded {
                     agent,
                     recipient,
                     amount,
@@ -154,8 +152,7 @@ impl FlawSeekingProxy {
                     violation_id: Some(violation_id),
                     deploy_hash: None,
                     timestamp: odra::contract_api::get_block_time(),
-                }
-                .emit();
+                });
 
                 GuardResult {
                     status: String::from("BLOCKED"),
@@ -175,13 +172,12 @@ impl FlawSeekingProxy {
         state.policy_hash = new_policy_hash.clone();
         self.agents.set(&agent, state);
 
-        PolicyUpdated {
+        odra::emit_event(PolicyUpdated {
             agent,
             old_policy_hash: old_hash,
             new_policy_hash,
             timestamp: odra::contract_api::get_block_time(),
-        }
-        .emit();
+        });
     }
 
     pub fn pause_agent(&mut self) {
@@ -191,11 +187,10 @@ impl FlawSeekingProxy {
         state.paused = true;
         self.agents.set(&agent, state);
 
-        AgentPaused {
+        odra::emit_event(AgentPaused {
             agent,
             timestamp: odra::contract_api::get_block_time(),
-        }
-        .emit();
+        });
     }
 
     pub fn unpause_agent(&mut self) {
@@ -205,11 +200,10 @@ impl FlawSeekingProxy {
         state.paused = false;
         self.agents.set(&agent, state);
 
-        AgentUnpaused {
+        odra::emit_event(AgentUnpaused {
             agent,
             timestamp: odra::contract_api::get_block_time(),
-        }
-        .emit();
+        });
     }
 
     pub fn resolve_violation(&mut self, violation_id: U256, verdict: String) {
@@ -294,10 +288,11 @@ mod tests {
 
     #[test]
     fn test_register_agent() {
-        let mut proxy = FlawSeekingProxy::deploy(&test_env(), ());
+        let env = test_env();
+        let mut proxy = FlawSeekingProxy::deploy(&env, ());
         proxy.register_agent(String::from("policy-hash-001"));
         let state = proxy
-            .get_agent_state(test_env::get_account(0))
+            .get_agent_state(env.get_account(0))
             .unwrap();
         assert!(state.registered);
         assert_eq!(state.policy_hash, "policy-hash-001");
@@ -305,11 +300,12 @@ mod tests {
 
     #[test]
     fn test_guarded_tx_allows_small_amount() {
-        let mut proxy = FlawSeekingProxy::deploy(&test_env(), ());
+        let env = test_env();
+        let mut proxy = FlawSeekingProxy::deploy(&env, ());
         proxy.register_agent(String::from("policy-hash-001"));
 
         let result = proxy.execute_guarded_tx(
-            test_env::get_account(1),
+            env.get_account(1),
             U256::from(30),
             String::from("Buy data"),
         );
@@ -318,11 +314,12 @@ mod tests {
 
     #[test]
     fn test_guarded_tx_blocks_large_amount() {
-        let mut proxy = FlawSeekingProxy::deploy(&test_env(), ());
+        let env = test_env();
+        let mut proxy = FlawSeekingProxy::deploy(&env, ());
         proxy.register_agent(String::from("policy-hash-001"));
 
         let result = proxy.execute_guarded_tx(
-            test_env::get_account(1),
+            env.get_account(1),
             U256::from(500),
             String::from("Drain attempt"),
         );
@@ -331,13 +328,14 @@ mod tests {
 
     #[test]
     fn test_agent_can_pause_and_unpause() {
-        let mut proxy = FlawSeekingProxy::deploy(&test_env(), ());
+        let env = test_env();
+        let mut proxy = FlawSeekingProxy::deploy(&env, ());
         proxy.register_agent(String::from("policy-hash-001"));
         proxy.pause_agent();
         proxy.unpause_agent();
 
         let result = proxy.execute_guarded_tx(
-            test_env::get_account(1),
+            env.get_account(1),
             U256::from(30),
             String::from("After unpause"),
         );

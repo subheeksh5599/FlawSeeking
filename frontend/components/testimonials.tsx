@@ -91,7 +91,7 @@ function TestimonialCard({ testimonial, isActive }: { testimonial: Testimonial; 
             <p className="text-sm font-medium text-foreground sm:text-base">
               {testimonial.name}
             </p>
-            <p className="text-xs text-muted-foreground sm:text-sm lg:hiddenleading-snug">
+            <p className="text-xs text-muted-foreground sm:text-sm lg:hidden leading-snug">
               {testimonial.role}
             </p>
           </div>

@@ -49,7 +49,7 @@ impl FlawSeekingValidator {
 
         let min = self.min_stake.get_or_default();
         assert!(
-            odra::contract_api::transferred_value() >= min,
+            self.env().attached_value() >= min,
             "Insufficient stake"
         );
 
@@ -57,7 +57,7 @@ impl FlawSeekingValidator {
             &validator,
             ValidatorState {
                 active: true,
-                staked_amount: odra::contract_api::transferred_value(),
+                staked_amount: self.env().attached_value(),
                 total_reviews: U256::zero(),
                 correct_verdicts: U256::zero(),
                 reputation_score: 100u8,
@@ -162,8 +162,9 @@ mod tests {
 
     #[test]
     fn test_register_validator() {
+        let env = test_env();
         let mut validator = FlawSeekingValidator::deploy(
-            &test_env(),
+            &env,
             U256::from(100),
             U256::from(1),
         );
@@ -171,7 +172,7 @@ mod tests {
         validator.register_validator();
 
         let state = validator
-            .get_validator(test_env::get_account(0))
+            .get_validator(env.get_account(0))
             .unwrap();
         assert!(state.active);
         assert_eq!(state.reputation_score, 100u8);
@@ -179,8 +180,9 @@ mod tests {
 
     #[test]
     fn test_submit_verdict() {
+        let env = test_env();
         let mut validator = FlawSeekingValidator::deploy(
-            &test_env(),
+            &env,
             U256::from(100),
             U256::from(1),
         );
@@ -200,8 +202,9 @@ mod tests {
 
     #[test]
     fn test_reputation_decays_on_wrong_verdicts() {
+        let env = test_env();
         let mut validator = FlawSeekingValidator::deploy(
-            &test_env(),
+            &env,
             U256::from(100),
             U256::from(1),
         );
@@ -225,24 +228,25 @@ mod tests {
         }
 
         let state = validator
-            .get_validator(test_env::get_account(0))
+            .get_validator(env.get_account(0))
             .unwrap();
         assert_eq!(state.reputation_score, 60u8);
     }
 
     #[test]
     fn test_slash_validator() {
+        let env = test_env();
         let mut validator = FlawSeekingValidator::deploy(
-            &test_env(),
+            &env,
             U256::from(100),
             U256::from(1),
         );
 
         validator.register_validator();
-        validator.slash_validator(test_env::get_account(0));
+        validator.slash_validator(env.get_account(0));
 
         let state = validator
-            .get_validator(test_env::get_account(0))
+            .get_validator(env.get_account(0))
             .unwrap();
         assert!(!state.active);
         assert_eq!(state.reputation_score, 0u8);

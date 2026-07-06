@@ -40,7 +40,7 @@ export function Hero(): ReactNode {
 
       <div className="mx-auto flex min-h-dvh max-w-4xl flex-col items-start justify-center gap-6 px-4 py-20 sm:justify-start sm:gap-0 sm:py-0 sm:pt-40 lg:px-8 lg:pt-68">
         <motion.h1
-          className="text-background dark:text-background text-4xl font-medium tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
+          className="text-white dark:text-white text-4xl font-medium tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
           initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -48,7 +48,7 @@ export function Hero(): ReactNode {
           <span className="block">Programmable security —</span>
           <span className="block">
             for the{" "}
-            <em className="text-background/80 dark:text-background/80 italic">
+            <em className="text-white/80 dark:text-white/80 italic">
               agent
             </em>{" "}
             economy
@@ -91,7 +91,7 @@ export function Hero(): ReactNode {
             </div>
           </div>
 
-          <p className="text-background/60 mt-6 text-center text-xs">
+          <p className="text-white/60 mt-6 text-center text-xs">
             FlawSeeking protects autonomous agents on Casper. Every transaction checked. Every violation logged.
           </p>
         </motion.div>

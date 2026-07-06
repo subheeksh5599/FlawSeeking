@@ -430,7 +430,7 @@ export function ShowcaseCards(): ReactNode {
           </p>
           <Link
             href="#"
-            className="group flex shrink-0 items-center leading-0 gap-2 text-xl font-medium text-muted-foreground transition-colors hover:text-foreground"
+            className="group flex shrink-0 items-center leading-none gap-2 text-xl font-medium text-muted-foreground transition-colors hover:text-foreground"
           >
             See all
             <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
