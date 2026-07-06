@@ -8,20 +8,20 @@
  */
 
 export const siteConfig = {
-  name: "Nexus AI",
-  tagline: "The AI Platform for Modern Teams",
+  name: "FlawSeeking",
+  tagline: "Programmable Security Layer for AI Agents on Casper",
   description:
-    "Build, deploy, and scale AI-powered applications with enterprise-grade infrastructure. From ideation to production in minutes.",
-  url: "https://nexus-ai.com",
-  twitter: "@nexusai",
+    "The shared security middleware for autonomous AI agents on Casper Network. Every transaction checked, every violation logged on-chain, every verdict verified by independent AI validators.",
+  url: "https://flawseeking.vercel.app",
+  twitter: "@flawseeking",
 
   nav: {
     cta: {
-      text: "Start Free",
+      text: "Integrate Agent",
       href: "#",
     },
     signIn: {
-      text: "Sign in",
+      text: "Dashboard",
       href: "#",
     },
   },
@@ -43,9 +43,6 @@ export const features = {
  * ============================================================================
  * THEME CONFIGURATION
  * ============================================================================
- *
- * Colors are defined in globals.css using CSS custom properties.
- * This config controls which theme features are enabled.
  */
 export const themeConfig = {
   defaultTheme: "dark" as "light" | "dark" | "system",

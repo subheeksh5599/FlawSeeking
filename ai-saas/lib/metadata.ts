@@ -1,28 +1,33 @@
 import type { Metadata } from "next";
 
 export const siteConfig = {
-  name: "React Bits Pro - AI SaaS Template",
+  name: "FlawSeeking — Security Layer for AI Agents on Casper",
   description:
-    "Build, deploy, and scale AI-powered applications with enterprise-grade infrastructure. From ideation to production in minutes.",
-  url: "https://nexus-ai.com",
+    "Programmable security middleware for autonomous AI agents on Casper Network. Transaction proxy, on-chain violation logging, and independent AI validator reviews. Built for the Casper Agentic Buildathon 2026.",
+  url: "https://flawseeking.vercel.app",
   ogImage: "/og-image.png",
-  creator: "@nexusai",
+  creator: "@flawseeking",
   authors: [
     {
-      name: "Nexus AI",
-      url: "https://nexus-ai.com",
+      name: "FlawSeeking",
+      url: "https://github.com/subheeksh5599/FlawSeeking",
     },
   ],
   keywords: [
-    "AI",
-    "artificial intelligence",
-    "machine learning",
-    "AI platform",
-    "LLM",
-    "GPT",
-    "AI API",
-    "developer tools",
-    "AI infrastructure",
+    "AI agents",
+    "blockchain security",
+    "Casper Network",
+    "CSPR",
+    "agentic AI",
+    "smart contracts",
+    "DeFi security",
+    "on-chain attestation",
+    "x402",
+    "Odra",
+    "Rust WASM",
+    "MCP server",
+    "validator network",
+    "programmable security",
   ],
 } as const;
 
@@ -36,7 +41,7 @@ export const baseMetadata: Metadata = {
   keywords: [...siteConfig.keywords],
   authors: [...siteConfig.authors],
   creator: siteConfig.creator,
-  publisher: siteConfig.name,
+  publisher: "FlawSeeking",
   robots: {
     index: true,
     follow: true,
@@ -57,7 +62,7 @@ export const baseMetadata: Metadata = {
     url: siteConfig.url,
     title: siteConfig.name,
     description: siteConfig.description,
-    siteName: siteConfig.name,
+    siteName: "FlawSeeking",
     images: [
       {
         url: siteConfig.ogImage,

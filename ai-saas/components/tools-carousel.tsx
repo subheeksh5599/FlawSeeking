@@ -12,27 +12,27 @@ interface Tool {
 
 const tools: Tool[] = [
   {
-    title: "Describe",
+    title: "Register",
     description:
-      "Tell Kraft what you need. A logo, a landing page, an entire brand—just say it.",
+      "Your AI agent enrolls with FlawSeeking and sets its policy — rate limits, allowlists, caps, and cooldowns. One deployment, permanent protection.",
     image: "/img/describe.webp",
   },
   {
-    title: "Generate",
+    title: "Guard",
     description:
-      "Watch as Kraft creates multiple design options, each one production-ready.",
+      "Every transaction passes through the FlawSeeking proxy contract. The policy engine checks it in under 200ms. Compliant txs go through. Violations are blocked and logged.",
     image: "/img/generate.webp",
   },
   {
-    title: "Refine",
+    title: "Verify",
     description:
-      "Tweak colors, fonts, adjust layouts—Kraft understands natural language edits.",
+      "Independent AI validators running different models review blocked transactions, submit verdicts on-chain, and earn x402 fees. Truth is profitable. Bad verdicts get slashed.",
     image: "/img/refine.webp",
   },
   {
-    title: "Ship",
+    title: "Trust",
     description:
-      "Export to Figma, download assets, or push directly to your codebase. Done.",
+      "Every violation, every verdict, every validator reputation score — permanently recorded on Casper Testnet. Full audit trail. Zero trust required.",
     image: "/img/ship.webp",
   },
 ];
@@ -93,14 +93,12 @@ export function ToolsCarousel(): ReactNode {
     x.set(targetX);
   };
 
-
-
   return (
     <section className="relative overflow-hidden py-20 md:py-28">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <h2 className="mb-12 text-2xl font-medium tracking-tight text-foreground md:text-3xl lg:text-4xl">
-            From idea to finished design in four simple steps
+            From agent registration to verified on-chain security in four steps
           </h2>
         </div>
       </div>

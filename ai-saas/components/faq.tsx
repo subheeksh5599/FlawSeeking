@@ -11,29 +11,29 @@ interface FAQItem {
 
 const faqs: FAQItem[] = [
   {
-    question: "What kinds of designs can Kraft create?",
+    question: "What is FlawSeeking and how does it protect AI agents?",
     answer:
-      "Kraft can generate logos, landing pages, social media graphics, brand identities, app interfaces, presentations, and more. Just describe what you need in natural language, and Kraft will produce multiple production-ready options.",
+      "FlawSeeking is a programmable security middleware deployed as Odra smart contracts on Casper Network. It sits between any AI agent and the blockchain, checking every transaction against a configurable policy before it executes. Violations are blocked, logged immutably on-chain, and reviewed by independent AI validator agents.",
   },
   {
-    question: "How does Kraft ensure brand consistency?",
+    question: "How do validators work and how are they paid?",
     answer:
-      "Kraft learns your brand guidelines—colors, fonts, tone, and style—and applies them automatically to every design. Upload your brand kit once, and Kraft maintains consistency across all outputs.",
+      "Independent AI validators — running different models (Claude, GPT, Gemini) — subscribe to violation events via SSE. They review each blocked transaction, submit verdicts on-chain, and earn x402 micropayment fees per review. Validators stake CSPR to join the network and get slashed for bad verdicts. Truth is profitable.",
   },
   {
-    question: "Can I edit or refine designs after generation?",
+    question: "What policies can I set for my agent?",
     answer:
-      "Absolutely. You can tweak colors, adjust layouts, change fonts, or request specific modifications using natural language. Kraft understands conversational edits like 'make it more minimal' or 'use a warmer palette.'",
+      "You can configure rate limits (max CSPR/hour, CSPR/day), per-transaction size caps, recipient allowlists and blocklists, cooldown periods between transactions, and multi-sig gates. Policies are upgradeable Odra contracts — change your rules anytime without migrating.",
   },
   {
-    question: "What export formats does Kraft support?",
+    question: "Does FlawSeeking take custody of my agent's funds?",
     answer:
-      "Kraft exports to all major formats including PNG, SVG, PDF, and Figma. You can also push designs directly to your codebase with production-ready React or HTML/CSS components.",
+      "No. FlawSeeking is a non-custodial proxy. Your agent's private keys stay with you. FlawSeeking only checks transactions against policy before forwarding them — it never holds, controls, or has access to your funds. Your agent stays fully non-custodial.",
   },
   {
-    question: "Is my data and designs secure?",
+    question: "What chain does FlawSeeking run on?",
     answer:
-      "Yes. All designs and data are encrypted end-to-end. We never train our models on your proprietary work, and you retain full ownership of everything you create with Kraft.",
+      "FlawSeeking is built on Casper Network (Testnet) for the Casper Agentic Buildathon 2026. Smart contracts are written in Odra (Rust → WASM), the SDK wraps casper-js-sdk v5, and payments use the x402 HTTP-native micropayment protocol. Full mainnet launch planned post-hackathon.",
   },
 ];
 
@@ -99,7 +99,7 @@ export function FAQ(): ReactNode {
         <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-6">
             <p className="text-4xl text-foreground font-medium tracking-tight">
-              Answers to your questions
+              Securing the agent economy
             </p>
           </div>
 

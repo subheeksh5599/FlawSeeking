@@ -1,15 +1,7 @@
 "use client";
 
 import { useScroll, useTransform, useSpring, motion } from "motion/react";
-import {
-  Paperclip,
-  Lightbulb,
-  PenTool,
-  Layout,
-  Mic,
-  ArrowRight,
-  ArrowDown,
-} from "lucide-react";
+import { ArrowDown, Shield, Activity, Lock } from "lucide-react";
 import Image from "next/image";
 import { useRef, type ReactNode } from "react";
 import { FluidCursor } from "./fluid-cursor";
@@ -53,13 +45,13 @@ export function Hero(): ReactNode {
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          <span className="block">Design with AI —</span>
+          <span className="block">Programmable security —</span>
           <span className="block">
-            the{" "}
+            for the{" "}
             <em className="text-background/80 dark:text-background/80 italic">
-              future
+              agent
             </em>{" "}
-            of creativity
+            economy
           </span>
         </motion.h1>
 
@@ -74,76 +66,33 @@ export function Hero(): ReactNode {
           }}
         >
           <div
-            className="relative rounded-4xl rounded-b-[2.3rem] border border-black/5 bg-[#f8f8fa] p-3"
+            className="relative rounded-4xl border border-black/5 bg-[#f8f8fa] p-8"
             style={{
               boxShadow:
-                "0 8px 32px rgba(0, 0, 0, 0.1), 0 4px 16px rgba(124, 58, 237, 0.08)",
+                "0 8px 32px rgba(0, 0, 0, 0.1), 0 4px 16px rgba(34, 197, 94, 0.08)",
             }}
           >
-            <div className="flex items-start gap-3">
-              <textarea
-                placeholder="Ask Kraft anything..."
-                className="no-focus-ring mx-4 my-2 min-h-15 w-full resize-none bg-transparent text-gray-800 placeholder:text-gray-400"
-                rows={2}
-              />
-            </div>
-
-            <div className="mt-4 flex flex-wrap items-center justify-between gap-2">
-              <div className="flex flex-wrap items-center gap-2">
-                <button
-                  type="button"
-                  className="focus-ring isolate flex h-12 w-12 shrink-0 cursor-pointer items-center justify-center rounded-full bg-white text-gray-400 transition-colors hover:border-gray-300 hover:text-gray-600"
-                  aria-label="Attach file"
-                >
-                  <Paperclip className="h-4 w-4" />
-                </button>
-
-                <button
-                  type="button"
-                  className="focus-ring isolate flex h-12 shrink-0 cursor-pointer items-center gap-2 rounded-full bg-white px-5 text-sm text-gray-500 transition-colors hover:border-gray-300 hover:text-gray-700"
-                >
-                  <Lightbulb className="h-4 w-4 shrink-0" />
-                  <span className="xs:inline hidden">Reasoning</span>
-                </button>
-
-                <button
-                  type="button"
-                  className="focus-ring isolate hidden h-12 shrink-0 cursor-pointer items-center gap-2 rounded-full bg-white px-5 text-sm text-gray-500 transition-colors hover:border-gray-300 hover:text-gray-700 sm:flex"
-                >
-                  <PenTool className="h-4 w-4 shrink-0" />
-                  <span>Create Design</span>
-                </button>
-
-                <button
-                  type="button"
-                  className="focus-ring isolate hidden h-12 shrink-0 cursor-pointer items-center gap-2 rounded-full bg-white px-5 text-sm text-gray-500 transition-colors hover:border-gray-300 hover:text-gray-700 md:flex"
-                >
-                  <Layout className="h-4 w-4 shrink-0" />
-                  <span>Wireframe</span>
-                </button>
-              </div>
-
-              <div className="flex shrink-0 items-center gap-2">
-                <button
-                  type="button"
-                  className="focus-ring isolate hidden h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-white text-gray-500 transition-colors hover:bg-gray-300 hover:text-gray-700 sm:flex"
-                  aria-label="Voice input"
-                >
-                  <Mic className="h-4 w-4" />
-                </button>
-                <button
-                  type="button"
-                  className="focus-ring bg-foreground dark:bg-background hover:bg-foreground/90 dark:hover:bg-background/90 isolate flex h-12 w-12 cursor-pointer items-center justify-center rounded-full text-white transition-colors"
-                  aria-label="Send message"
-                >
-                  <ArrowRight className="h-4 w-4" />
-                </button>
-              </div>
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              {[
+                { icon: Shield, label: "Block rogue transactions", desc: "Policy engine catches violations in <200ms" },
+                { icon: Activity, label: "Log on-chain", desc: "Immutable audit trail on Casper Testnet" },
+                { icon: Lock, label: "AI validators review", desc: "Independent agents verify every block" },
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-green-50">
+                    <item.icon className="h-5 w-5 text-green-600" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-gray-800">{item.label}</p>
+                    <p className="text-xs text-gray-500">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
           <p className="text-background/60 mt-6 text-center text-xs">
-            Kraft can make mistakes, but learns from them.
+            FlawSeeking protects autonomous agents on Casper. Every transaction checked. Every violation logged.
           </p>
         </motion.div>
       </div>
@@ -159,8 +108,7 @@ export function Hero(): ReactNode {
         }}
       >
         <p className="text-foreground/60 dark:text-foreground/50 max-w-sm text-sm">
-          Kraft uses advanced AI to transform your ideas into stunning designs.
-          Just describe what you need.
+          Drop FlawSeeking in front of your agent. 5 lines of SDK code. Your agent stays non-custodial. FlawSeeking stays the gatekeeper.
         </p>
 
         <ArrowDown

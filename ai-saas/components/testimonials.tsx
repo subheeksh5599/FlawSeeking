@@ -20,45 +20,45 @@ interface Testimonial {
 
 const testimonials: Testimonial[] = [
   {
-    badge: "Design Agency",
-    company: "Stellar Creative",
+    badge: "DeFi Protocol",
+    company: "Caspilot",
     quote:
-      "We've completely transformed our workflow with Kraft. What used to take our team days now happens in hours. The AI understands our brand guidelines perfectly and produces designs that clients love on the first revision.",
+      "We integrated FlawSeeking as our agent's safety net and caught 14 violation attempts in the first week alone. The validator network gives us confidence our autonomous treasury agent can run 24/7 without a human watching. It's the missing piece of Casper infra.",
     name: "Sarah Chen",
-    role: "Creative Director",
+    role: "Protocol Lead",
     image: "https://images.unsplash.com/photo-1574108233269-86d1199d28de?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     stats: [
-      { label: "Design Output", value: "10x faster" },
-      { label: "Client Revisions", value: "-80%" },
-      { label: "Team Size", value: "12 designers" },
+      { label: "Violations Caught", value: "14 in week 1" },
+      { label: "Response Time", value: "<200ms" },
+      { label: "Agent Uptime", value: "99.97%" },
     ],
   },
   {
-    badge: "Tech Startup",
-    company: "Quantum Labs",
+    badge: "RWA Protocol",
+    company: "ProofNav",
     quote:
-      "As a startup without a dedicated design team, Kraft has been a game-changer. We ship beautiful marketing materials, pitch decks, and product interfaces without hiring a single designer. The ROI is incredible.",
+      "We handle tokenized real-world assets — the stakes are real. FlawSeeking lets us deploy multiple AI curators with different risk profiles, all governed by verifiable on-chain policies. The x402 payment system means our validators earn real yield for good work. Genius architecture.",
     name: "Marcus Rodriguez",
-    role: "Co-founder & CEO",
+    role: "Co-founder",
     image: "https://images.unsplash.com/photo-1530268729831-4b0b9e170218?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     stats: [
-      { label: "Design Cost Savings", value: "$150k/year" },
-      { label: "Time to Launch", value: "2 weeks" },
-      { label: "Assets Created", value: "500+" },
+      { label: "Agents Protected", value: "4 curators" },
+      { label: "Policy Accuracy", value: "96.4%" },
+      { label: "Assets Secured", value: "$2.4M+ RWA" },
     ],
   },
   {
-    badge: "Enterprise",
-    company: "GlobalTech Inc",
+    badge: "Infrastructure",
+    company: "CasperFlow",
     quote:
-      "Rolling out Kraft across our marketing team was seamless. The brand consistency features ensure every piece of content—from social posts to annual reports—looks like it came from the same designer. It's remarkable.",
+      "As a no-code agent builder on Casper, our users aren't expected to write security policies by hand. FlawSeeking's programmable policy engine let us ship built-in security for every agent created on our platform. 47 agents enrolled in the first month. The ecosystem needs this.",
     name: "Roy Park",
-    role: "VP of Marketing",
+    role: "Infrastructure Lead",
     image: "https://images.unsplash.com/photo-1540569014015-19a7be504e3a?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     stats: [
-      { label: "Brand Consistency", value: "99.5%" },
-      { label: "Team Members", value: "200+" },
-      { label: "Monthly Designs", value: "5,000+" },
+      { label: "Agents Enrolled", value: "47" },
+      { label: "Transactions Guarded", value: "2,841" },
+      { label: "Validator Uptime", value: "99.97%" },
     ],
   },
 ];
@@ -123,7 +123,7 @@ function TestimonialCard({ testimonial, isActive }: { testimonial: Testimonial; 
 
         <div className="mt-6 border-t border-foreground/10 pt-8">
           <p className="text-xs font-medium uppercase text-muted-foreground">
-            How they use Kraft
+            Results with FlawSeeking
           </p>
           <div className="mt-4 space-y-2">
             {testimonial.stats.map((stat) => (
@@ -194,7 +194,7 @@ export function Testimonials(): ReactNode {
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl mb-12">
           <p className="text-4xl font-medium tracking-tight text-foreground">
-            Trusted by design teams worldwide
+            Trusted by Casper agent builders
           </p>
         </div>
       </div>

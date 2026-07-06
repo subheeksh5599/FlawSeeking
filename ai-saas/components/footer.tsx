@@ -89,7 +89,7 @@ export function Footer(): ReactNode {
       <div className="relative mx-auto max-w-7xl py-8">
         <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Kraft, Inc. All rights reserved.
+            © {new Date().getFullYear()} FlawSeeking. Built for the Casper Agentic Buildathon 2026.
           </p>
           <div className="flex gap-6">
             <Link

@@ -11,15 +11,14 @@ import Link from "next/link";
 import { useState, type ReactNode } from "react";
 
 const navLinks = [
+  { href: "#how", label: "How it Works" },
   { href: "#features", label: "Features" },
-  { href: "#templates", label: "Templates" },
-  { href: "#pricing", label: "Pricing" },
-  { href: "#resources", label: "Resources" },
+  { href: "#resources", label: "Docs" },
 ];
 
 const authLinks = [
-  { href: "", label: "Contact" },
-  { href: "", label: "Join" },
+  { href: "https://github.com/subheeksh5599/FlawSeeking", label: "GitHub" },
+  { href: "#", label: "Launch App" },
 ];
 
 export function Header(): ReactNode {
@@ -78,11 +77,11 @@ export function Header(): ReactNode {
             <Link
               href="/"
               className="focus-ring flex items-center"
-              aria-label="Kraft home"
+              aria-label="FlawSeeking home"
             >
               <Image
                 src="/svg/logo.svg"
-                alt="Kraft"
+                alt="FlawSeeking"
                 width={120}
                 height={34}
                 priority
