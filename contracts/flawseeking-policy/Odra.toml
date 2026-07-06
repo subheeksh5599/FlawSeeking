@@ -1,0 +1,6 @@
+[package]
+name = "flawseeking_policy"
+fqn = "flawseeking_policy::FlawSeekingPolicy"
+
+[backend.casper]
+proj_name = "flawseeking-policy"

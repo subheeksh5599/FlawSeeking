@@ -1,0 +1,9 @@
+node_modules/
+dist/
+target/
+.wasm/
+keys/
+.env
+*.pem
+*.log
+.DS_Store

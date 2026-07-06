@@ -1,0 +1,30 @@
+{
+  "name": "@flawseeking/sdk",
+  "version": "0.1.0",
+  "description": "TypeScript SDK for FlawSeeking — programmable security layer for Casper agent economy",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "casper-js-sdk": "^5.0.0",
+    "crypto-js": "^4.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^1.0.0"
+  },
+  "keywords": [
+    "casper",
+    "odra",
+    "x402",
+    "ai-agents",
+    "blockchain-security",
+    "flawseeking"
+  ],
+  "license": "MIT"
+}

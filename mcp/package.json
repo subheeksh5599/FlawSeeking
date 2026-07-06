@@ -1,0 +1,23 @@
+{
+  "name": "@flawseeking/mcp-server",
+  "version": "0.1.0",
+  "description": "MCP Server for FlawSeeking — expose agent health, violations, and validator data to AI agents",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "@flawseeking/sdk": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "tsx": "^4.0.0"
+  },
+  "keywords": ["mcp", "casper", "ai-agents", "flawseeking", "model-context-protocol"],
+  "license": "MIT"
+}

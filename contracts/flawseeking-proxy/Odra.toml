@@ -1,0 +1,6 @@
+[package]
+name = "flawseeking_proxy"
+fqn = "flawseeking_proxy::FlawSeekingProxy"
+
+[backend.casper]
+proj_name = "flawseeking-proxy"

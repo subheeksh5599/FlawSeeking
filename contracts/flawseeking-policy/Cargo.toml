@@ -1,0 +1,10 @@
+[package]
+name = "flawseeking-policy"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+odra = { version = "2.7", features = ["casper"] }
+
+[lib]
+crate-type = ["cdylib", "rlib"]

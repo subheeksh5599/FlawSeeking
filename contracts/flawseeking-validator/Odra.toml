@@ -1,0 +1,6 @@
+[package]
+name = "flawseeking_validator"
+fqn = "flawseeking_validator::FlawSeekingValidator"
+
+[backend.casper]
+proj_name = "flawseeking-validator"
