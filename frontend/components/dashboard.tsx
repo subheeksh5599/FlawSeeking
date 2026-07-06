@@ -3,8 +3,6 @@
 import { useEffect, useState, useCallback, type ReactNode } from "react";
 import {
   Shield,
-  Activity,
-  Zap,
   AlertTriangle,
   CheckCircle,
   Bot,
