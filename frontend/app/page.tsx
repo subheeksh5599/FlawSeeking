@@ -1,3 +1,4 @@
+import { Dashboard } from "@/components/dashboard";
 import { FAQ } from "@/components/faq";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
@@ -26,6 +27,7 @@ export default function HomePage(): ReactNode {
       <ThemeSwitch />
       <main id="main-content" className="flex-1">
         <Hero />
+        <Dashboard />
         <ImageReveal />
         <section className="relative py-32 md:py-48">
           <TextReveal
