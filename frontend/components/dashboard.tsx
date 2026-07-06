@@ -16,14 +16,15 @@ import {
 
 interface Agent {
   address: string;
+  agent: string;
   registered: boolean;
   policyHash: string;
-  totalTxCount: number;
-  violationCount: number;
+  totalTransactions: number;
+  violations: number;
   totalVolumeCspr: string;
   paused: boolean;
   createdAt: number;
-  policy: {
+  activePolicy: {
     maxCsprPerTx: string;
     maxCsprPerHour: string;
     maxCsprPerDay: string;
@@ -375,10 +376,10 @@ export function Dashboard(): ReactNode {
                           </div>
                         </td>
                         <td className="py-3 px-4 text-muted-foreground hidden md:table-cell">
-                          {agent.totalTxCount.toLocaleString()}
+                          {agent.totalTransactions.toLocaleString()}
                         </td>
                         <td className="py-3 px-4 text-muted-foreground hidden md:table-cell">
-                          {agent.violationCount}
+                          {agent.violations}
                         </td>
                         <td className="py-3 px-4">
                           <span
@@ -388,7 +389,7 @@ export function Dashboard(): ReactNode {
                           </span>
                         </td>
                         <td className="py-3 px-4 text-xs text-muted-foreground hidden sm:table-cell">
-                          {agent.policy.maxCsprPerTx} CSPR/tx
+                          {agent.activePolicy.maxCsprPerTx} CSPR/tx
                         </td>
                       </tr>
                     ))}
@@ -417,7 +418,7 @@ export function Dashboard(): ReactNode {
                   <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-4">
                     <div>
                       <span className="text-xs text-muted-foreground">Policy Hash</span>
-                      <p className="text-sm font-mono text-foreground">{agent.policyHash}</p>
+                      <p className="text-sm font-mono text-foreground">{agent.activePolicyHash}</p>
                     </div>
                     <div>
                       <span className="text-xs text-muted-foreground">Total Volume</span>
@@ -437,27 +438,27 @@ export function Dashboard(): ReactNode {
                   <div className="grid gap-3 sm:grid-cols-3 text-xs">
                     <div className="rounded-lg bg-muted/50 p-3">
                       <span className="text-muted-foreground">Per-Tx Cap</span>
-                      <p className="text-foreground font-semibold">{agent.policy.maxCsprPerTx} CSPR</p>
+                      <p className="text-foreground font-semibold">{agent.activePolicy.maxCsprPerTx} CSPR</p>
                     </div>
                     <div className="rounded-lg bg-muted/50 p-3">
                       <span className="text-muted-foreground">Hourly Cap</span>
-                      <p className="text-foreground font-semibold">{agent.policy.maxCsprPerHour} CSPR</p>
+                      <p className="text-foreground font-semibold">{agent.activePolicy.maxCsprPerHour} CSPR</p>
                     </div>
                     <div className="rounded-lg bg-muted/50 p-3">
                       <span className="text-muted-foreground">Daily Cap</span>
-                      <p className="text-foreground font-semibold">{agent.policy.maxCsprPerDay} CSPR</p>
+                      <p className="text-foreground font-semibold">{agent.activePolicy.maxCsprPerDay} CSPR</p>
                     </div>
                     <div className="rounded-lg bg-muted/50 p-3">
                       <span className="text-muted-foreground">Cooldown</span>
-                      <p className="text-foreground font-semibold">{agent.policy.cooldownSeconds}s</p>
+                      <p className="text-foreground font-semibold">{agent.activePolicy.cooldownSeconds}s</p>
                     </div>
                     <div className="rounded-lg bg-muted/50 p-3">
                       <span className="text-muted-foreground">Allowlist</span>
-                      <p className="text-foreground font-semibold">{agent.policy.allowlist.length} addresses</p>
+                      <p className="text-foreground font-semibold">{agent.activePolicy.allowlist.length} addresses</p>
                     </div>
                     <div className="rounded-lg bg-muted/50 p-3">
                       <span className="text-muted-foreground">Blocklist</span>
-                      <p className="text-foreground font-semibold">{agent.policy.blocklist.length} addresses</p>
+                      <p className="text-foreground font-semibold">{agent.activePolicy.blocklist.length} addresses</p>
                     </div>
                   </div>
                 </section>

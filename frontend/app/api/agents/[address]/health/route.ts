@@ -13,13 +13,17 @@ export async function GET(
   }
 
   return NextResponse.json({
+    address: agent.address,
     agent: agent.address,
     healthScore: agent.healthScore,
     totalTransactions: agent.totalTxCount,
     violations: agent.violationCount,
+    totalVolumeCspr: agent.totalVolumeCspr,
     activePolicy: agent.policy,
+    activePolicyHash: agent.policyHash,
     riskLevel: agent.riskLevel,
     paused: agent.paused,
     createdAt: agent.createdAt,
+    registered: agent.registered,
   })
 }
