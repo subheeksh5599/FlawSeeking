@@ -149,8 +149,8 @@ export function ImageReveal({
                 <div
                   className="pointer-events-none absolute inset-0 mix-blend-color"
                   style={{
-                    background:
-                      "linear-gradient(135deg, #333DA7 0%, #7388DF 100%)",
+                      background:
+                        "linear-gradient(135deg, #166534 0%, #22c55e 100%)",
                   }}
                   aria-hidden="true"
                 />
@@ -172,8 +172,8 @@ export function ImageReveal({
                 <div
                   className="pointer-events-none absolute inset-0 mix-blend-color"
                   style={{
-                    background:
-                      "linear-gradient(135deg, #333DA7 0%, #7388DF 100%)",
+                      background:
+                        "linear-gradient(135deg, #166534 0%, #22c55e 100%)",
                   }}
                   aria-hidden="true"
                 />
@@ -195,8 +195,8 @@ export function ImageReveal({
                 <div
                   className="pointer-events-none absolute inset-0 mix-blend-color"
                   style={{
-                    background:
-                      "linear-gradient(135deg, #333DA7 0%, #7388DF 100%)",
+                      background:
+                        "linear-gradient(135deg, #166534 0%, #22c55e 100%)",
                   }}
                   aria-hidden="true"
                 />

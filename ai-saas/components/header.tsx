@@ -82,8 +82,8 @@ export function Header(): ReactNode {
               <Image
                 src="/svg/logo.svg"
                 alt="FlawSeeking"
-                width={120}
-                height={34}
+                width={200}
+                height={36}
                 priority
               />
             </Link>

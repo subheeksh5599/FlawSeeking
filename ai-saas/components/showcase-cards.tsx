@@ -29,15 +29,15 @@ interface CardData {
 
 const cards: CardData[] = [
   {
-    title: "Startup Launch Kit",
+    title: "Transaction Proxy",
     image: "/img/mock1_compressed.webp",
   },
   {
-    title: "E-commerce Suite",
+    title: "Policy Engine",
     image: "/img/mock5_compressed.webp",
   },
   {
-    title: "SaaS Dashboard",
+    title: "Validator Network",
     image: "/img/mock9_compressed.webp",
   },
 ];
@@ -176,7 +176,7 @@ function SafariCard({ title, imageSrc, index }: BulgeCardProps): ReactNode {
       <div
         className="pointer-events-none absolute inset-0 mix-blend-color"
         style={{
-          background: "linear-gradient(135deg, #333DA7 0%, #7388DF 100%)",
+          background: "linear-gradient(135deg, #166534 0%, #22c55e 100%)",
         }}
         aria-hidden="true"
       />
@@ -388,7 +388,7 @@ function BulgeCard({ title, imageSrc, index }: BulgeCardProps): ReactNode {
       <div
         className="pointer-events-none absolute inset-0 mix-blend-color"
         style={{
-          background: "linear-gradient(135deg, #333DA7 0%, #7388DF 100%)",
+          background: "linear-gradient(135deg, #166534 0%, #22c55e 100%)",
         }}
         aria-hidden="true"
       />
@@ -410,7 +410,7 @@ export function ShowcaseCards(): ReactNode {
     <section className="px-4 py-20 sm:px-6 md:py-28 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <h2 className="mb-12 text-2xl font-medium tracking-tight text-foreground md:text-3xl lg:text-4xl">
-          Pre-built designs, ready to customize
+          Pre-built security policies, ready to deploy
         </h2>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -426,8 +426,7 @@ export function ShowcaseCards(): ReactNode {
 
         <div className="mt-12 flex flex-col gap-2 sm:flex-row items-start sm:justify-between">
           <p className="max-w-md text-lg text-muted-foreground">
-            Skip the blank canvas. Start with curated presets crafted for
-            specific industries and use cases.
+            Deploy rate limits, allowlists, and multi-sig gates in minutes — no custom contract development needed.
           </p>
           <Link
             href="#"
