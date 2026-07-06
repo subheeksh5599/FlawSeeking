@@ -26,37 +26,26 @@ export interface ReviewResult {
   suggestedAction: string
 }
 
-const REVIEW_PROMPT = `You are a security auditor for the FlawSeeking agent economy on Casper Network.
-Review the following blocked transaction and determine if the block was correct.
+const REVIEW_PROMPT = `You are a security auditor for FlawSeeking on Casper Network. Review blocked transactions.
 
-## Violation Details
-- Violation ID: {{violationId}}
+## Violation
+- ID: {{violationId}}
 - Agent: {{agentAddress}}
-- Attempted Amount: {{amount}} CSPR
+- Amount: {{amount}} CSPR
 - Block Reason: {{blockReason}}
-- Policy Limit: {{policyLimit}} CSPR per transaction
+- Policy Limit: {{policyLimit}} CSPR/tx
 
 ## Agent History
-- Total Transactions: {{totalTx}}
-- Previous Violations: {{previousViolations}}
+- Total Txs: {{totalTx}}
+- Prior Violations: {{previousViolations}}
 - Days Active: {{daysActive}}
-- Risk Level: {{riskLevel}}
 
-## Analysis Required
-1. Was the block CORRECT (true positive — agent genuinely tried to exceed policy)?
-2. Was the block OVERLY AGGRESSIVE (false positive — legitimate transaction caught by policy)?
-3. Is there any evidence this was a malicious attempt (MEV extraction, drain attempt, etc.)?
-
-Respond with a JSON object:
-{
-  "verdict": "CONFIRMED" | "OVERTURNED" | "INCONCLUSIVE",
-  "confidence": 0-100,
-  "reasoning": "Detailed analysis of the violation...",
-  "suggestedAction": "What should happen next..."
-}`
+Respond with ONLY a JSON object, no other text:
+{"verdict":"CONFIRMED"|"OVERTURNED"|"INCONCLUSIVE","confidence":0-100,"reasoning":"...","suggestedAction":"..."}`
 
 export async function reviewViolation(
   context: ViolationContext,
+  apiKey?: string,
 ): Promise<ReviewResult> {
   const prompt = REVIEW_PROMPT
     .replace('{{violationId}}', String(context.id))
@@ -67,28 +56,16 @@ export async function reviewViolation(
     .replace('{{totalTx}}', String(context.agentHistory.totalTx))
     .replace('{{previousViolations}}', String(context.agentHistory.violations))
     .replace('{{daysActive}}', String(context.agentHistory.daysActive))
-    .replace(
-      '{{riskLevel}}',
-      context.agentHistory.violations > 5 ? 'HIGH' : 'LOW',
-    )
 
-  console.log('[Reviewer] Sending to LLM for review...')
-
-  const useLLM = process.env.OPENAI_API_KEY
-
-  if (useLLM) {
+  if (apiKey) {
     try {
-      const { OpenAI } = await import('openai')
-      const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+      const Groq = (await import('groq-sdk')).default
+      const groq = new Groq({ apiKey })
 
-      const response = await openai.chat.completions.create({
-        model: 'gpt-4o',
+      const response = await groq.chat.completions.create({
+        model: 'llama-3.3-70b-versatile',
         messages: [
-          {
-            role: 'system',
-            content:
-              'You are a blockchain security auditor. Always respond with valid JSON.',
-          },
+          { role: 'system', content: 'You are a blockchain security auditor. Respond ONLY with valid JSON. No markdown, no extra text.' },
           { role: 'user', content: prompt },
         ],
         temperature: 0.3,
@@ -100,12 +77,11 @@ export async function reviewViolation(
       if (jsonMatch) {
         return JSON.parse(jsonMatch[0]) as ReviewResult
       }
+      throw new Error('No JSON in response')
     } catch (err) {
-      console.error('[Reviewer] LLM call failed, using heuristic fallback:', err)
+      console.warn('[Reviewer] LLM call failed, falling back to heuristic:', String(err).slice(0, 80))
     }
   }
-
-  console.warn('[Reviewer] No API key — using heuristic evaluation')
 
   const amount = parseFloat(context.attemptedAmount)
   const limit = parseFloat(context.policyLimits.maxPerTx)
@@ -115,9 +91,8 @@ export async function reviewViolation(
     return {
       verdict: 'CONFIRMED',
       confidence: 95,
-      reasoning: `Agent attempted ${amount} CSPR — ${ratio}x the ${limit} CSPR policy cap. With ${context.agentHistory.violations} prior violations, this is a high-confidence true positive.`,
-      suggestedAction:
-        'Keep block in place. Recommend agent review its policy or investigate for compromise.',
+      reasoning: `Agent attempted ${amount} CSPR — ${ratio.toFixed(0)}x the ${limit} CSPR policy cap. With ${context.agentHistory.violations} prior violations, high-confidence true positive.`,
+      suggestedAction: 'Keep block. Recommend agent policy review or compromise investigation.',
     }
   }
 
@@ -125,17 +100,15 @@ export async function reviewViolation(
     return {
       verdict: 'OVERTURNED',
       confidence: 70,
-      reasoning: `Agent attempted ${amount} CSPR, only ${ratio.toFixed(1)}x over the ${limit} CSPR cap with zero prior violations. This may be a legitimate operation with a policy that is too restrictive.`,
-      suggestedAction:
-        'Overturn block. Recommend agent increase per-tx limit to accommodate normal operations.',
+      reasoning: `Agent attempted ${amount} CSPR, ${ratio.toFixed(1)}x over ${limit} CSPR cap with zero priors. Possible legitimate operation caught by overly restrictive policy.`,
+      suggestedAction: 'Overturn block. Recommend increasing per-tx limit.',
     }
   }
 
   return {
     verdict: 'CONFIRMED',
     confidence: 85,
-    reasoning: `Agent attempted ${amount} CSPR which is ${ratio.toFixed(1)}x over the ${limit} CSPR limit. Block is correct per policy.`,
-    suggestedAction:
-      'Block stands. Agent should pre-authorize larger transactions through policy update.',
+    reasoning: `Agent attempted ${amount} CSPR (${ratio.toFixed(1)}x over ${limit} CSPR limit). Block correct per policy.`,
+    suggestedAction: 'Block stands. Agent should pre-authorize larger txs through policy update.',
   }
 }
