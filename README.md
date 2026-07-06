@@ -214,7 +214,7 @@ flawseeking/
 │   └── src/
 │       ├── index.ts              # Entry point + SSE subscriber
 │       └── reviewer.ts           # LLM-based violation reviewer
-├── ai-saas/                      # Frontend landing page
+├── frontend/                     # Next.js landing page
 │   └── src/                      # Dashboard UI
 ├── scripts/
 │   ├── deploy.sh                 # Contract deployment to testnet
