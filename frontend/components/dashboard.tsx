@@ -118,15 +118,22 @@ export function Dashboard(): ReactNode {
   const [reviewing, setReviewing] = useState<number | null>(null);
   const [expandedAgent, setExpandedAgent] = useState<string | null>(null);
 
+  const [error, setError] = useState<string | null>(null);
+
   const loadData = useCallback(() => {
     setLoading(true);
+    setError(null);
     Promise.all([
       fetch("/api/violations").then((r) => r.json()),
       fetch("/api/ecosystem").then((r) => r.json()),
     ])
       .then(([vData, eData]) => {
-        setViolations(vData.violations);
+        setViolations(vData.violations || []);
         setStats(eData);
+      })
+      .catch((e) => {
+        console.error("Failed to load ecosystem data:", e);
+        setError("Failed to load data. Check your connection and try again.");
       })
       .finally(() => setLoading(false));
   }, []);
@@ -139,25 +146,25 @@ export function Dashboard(): ReactNode {
     Promise.all([
       fetch(
         "/api/agents/01a3b5c7d9e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5/health",
-      ).then((r) => r.json()),
+      ).then((r) => r.json()).catch(() => null),
       fetch(
         "/api/agents/01f4a2b8c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8/health",
-      ).then((r) => r.json()),
+      ).then((r) => r.json()).catch(() => null),
       fetch(
         "/api/agents/01b000d000e000f000a000d0000000000dead/health",
-      ).then((r) => r.json()),
+      ).then((r) => r.json()).catch(() => null),
       fetch(
         "/api/validators/01val00000000000000000000000000000001",
-      ).then((r) => r.json()),
+      ).then((r) => r.json()).catch(() => null),
       fetch(
         "/api/validators/01val00000000000000000000000000000002",
-      ).then((r) => r.json()),
+      ).then((r) => r.json()).catch(() => null),
       fetch(
         "/api/validators/01val00000000000000000000000000000003",
-      ).then((r) => r.json()),
+      ).then((r) => r.json()).catch(() => null),
     ]).then(([a1, a2, a3, v1, v2, v3]) => {
-      setAgents([a1, a2, a3].filter((a) => !a.error));
-      setValidators([v1, v2, v3].filter((v) => !v.error));
+      setAgents([a1, a2, a3].filter((a) => a && !a.error));
+      setValidators([v1, v2, v3].filter((v) => v && !v.error));
     });
   }, []);
 
@@ -211,7 +218,7 @@ export function Dashboard(): ReactNode {
               <span className="text-lg font-semibold text-foreground">
                 FlawSeeking
               </span>
-              <span className="hidden sm:inline-block rounded-md bg-green-500/10 px-2 py-0.5 text-xs font-medium text-green-400">
+              <span className="inline-block rounded-md bg-green-500/10 px-2 py-0.5 text-xs font-medium text-green-400">
                 Dashboard
               </span>
             </div>
@@ -239,44 +246,50 @@ export function Dashboard(): ReactNode {
       </header>
 
       <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
-        {loading && (!stats || agents.length === 0) ? (
-          <div className="flex items-center justify-center py-32">
+        {loading ? (
+          <div className="flex flex-col items-center justify-center py-32 gap-3">
             <RefreshCw className="h-6 w-6 animate-spin text-muted-foreground" />
+            <span className="text-sm text-muted-foreground">Loading agent data...</span>
+          </div>
+        ) : error ? (
+          <div className="flex flex-col items-center justify-center py-32 gap-3">
+            <AlertTriangle className="h-8 w-8 text-red-400" />
+            <p className="text-sm text-red-400">{error}</p>
+            <button onClick={loadData} className="text-sm text-green-400 hover:underline">Retry</button>
           </div>
         ) : (
           <div className="space-y-8">
             {/* Ecosystem Stats */}
-            {stats && (
-              <div className="grid grid-cols-2 md:grid-cols-6 gap-3">
-                {[
+            <div className="grid grid-cols-2 md:grid-cols-6 gap-3">
+              {[
                   {
                     label: "Agents Protected",
-                    value: stats.totalAgents,
+                    value: stats?.totalAgents ?? 0,
                     icon: Bot,
                   },
                   {
                     label: "Validators",
-                    value: stats.totalValidators,
+                    value: stats?.totalValidators ?? 0,
                     icon: Server,
                   },
                   {
                     label: "Txs Guarded",
-                    value: stats.totalTransactions.toLocaleString(),
+                    value: (stats?.totalTransactions ?? 0).toLocaleString(),
                     icon: Shield,
                   },
                   {
                     label: "Violations Blocked",
-                    value: stats.totalViolations,
+                    value: stats?.totalViolations ?? 0,
                     icon: AlertTriangle,
                   },
                   {
                     label: "Active Alerts",
-                    value: stats.activeViolations,
+                    value: stats?.activeViolations ?? 0,
                     icon: Zap,
                   },
                   {
                     label: "Uptime",
-                    value: stats.networkUptime,
+                    value: stats?.networkUptime ?? "--",
                     icon: Activity,
                   },
                 ].map((s) => (
@@ -294,7 +307,6 @@ export function Dashboard(): ReactNode {
                   </div>
                 ))}
               </div>
-            )}
 
             {/* Agent List */}
             <section>
